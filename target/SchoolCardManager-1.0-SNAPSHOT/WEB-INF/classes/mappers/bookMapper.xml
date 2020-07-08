@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjp.dao.BookDao">
+    <resultMap type="Book" id="BookResult">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="author" property="author"/>
+        <result column="publish" property="publish"/>
+        <result column="lendCount" property="lendCount"/>
+        <result column="isDelete" property="isDelete"/>
+    </resultMap>
+    <select id="bookList" resultMap="BookResult" parameterType="String">
+        select * from book
+        <if test="condition!='' and condition!=null">
+            where name like #{condition} or publish like #{condition} or author like #{condition}
+        </if> order by isDelete, lendCount desc
+    </select>
+    <select id="getBookById" resultMap="BookResult" parameterType="Integer">
+        select * from book where id = #{id}
+    </select>
+    <insert id="add" parameterType="Map">
+        insert into book(`name`, author, publish) value(#{name}, #{author}, #{publish})
+    </insert>
+    <update id="delete" parameterType="Integer">
+        update book set isDelete = 1 where id = #{id}
+    </update>
+    <update id="update" parameterType="Map">
+        update book set `name` = #{name}, author = #{author}, publish = #{publish} where id = #{id}
+    </update>
+</mapper>

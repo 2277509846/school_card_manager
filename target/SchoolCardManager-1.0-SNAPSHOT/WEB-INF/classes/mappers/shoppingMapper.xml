@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjp.dao.ShoppingDao">
+    <resultMap type="Shopping" id="ShoppingResult">
+        <result column="studentNum" property="studentNum"/>
+        <result column="goodId" property="goodId"/>
+        <result column="shoppingTime" property="shoppingTime"/>
+        <result column="shoppingMoney" property="shoppingMoney"/>
+        <result column="shoppingCount" property="shoppingCount"/>
+    </resultMap>
+    <select id="shoppingList" resultMap="ShoppingResult" parameterType="String">
+        select * from shopping
+        <if test="condition!='' and condition!=null">
+            where studentNum like #{condition} or goodId like #{condition}
+        </if> order by shoppingTime desc
+    </select>
+    <insert id="addRecord" parameterType="Map">
+        insert into shopping(studentNum, goodId, shoppingTime, shoppingCount) values(#{studentNum}, #{goodId}, #{shoppingTime}, #{shoppingCount});
+    </insert>
+    <select id="getShoppingListByStudentNum" parameterType="String" resultMap="ShoppingResult">
+        select * from shopping where studentNum = #{studentNum} order by shoppingTime desc
+    </select>
+</mapper>

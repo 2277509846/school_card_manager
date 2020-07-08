@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjp.dao.RechargeSchoolCardDao">
+    <resultMap type="RechargeSchoolCard" id="RechargeSchoolCardResult">
+        <result column="studentNum" property="studentNum"/>
+        <result column="rechargeTime" property="rechargeTime"/>
+        <result column="rechargeMoney" property="rechargeMoney"/>
+    </resultMap>
+    <select id="rechargeSchoolCardList" resultMap="RechargeSchoolCardResult" parameterType="String">
+        select * from recharge_school_card
+        <if test="condition!='' and condition!=null">
+            where studentNum like #{condition}
+        </if> order by rechargeTime desc
+    </select>
+    <select id="getRechargeSchoolCardsByStudentNum" resultMap="RechargeSchoolCardResult" parameterType="String">
+        select * from recharge_school_card where studentNum = #{studentNum} order by rechargeTime desc
+    </select>
+    <insert id="recharge" parameterType="Map">
+        insert into recharge_school_card values(#{studentNum}, #{rechargeTime}, #{rechargeMoney})
+    </insert>
+</mapper>

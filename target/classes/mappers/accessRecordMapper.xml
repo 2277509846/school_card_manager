@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjp.dao.AccessRecordDao">
+    <resultMap type="AccessRecord" id="AccessRecordResult">
+        <result column="studentNum" property="studentNum"/>
+        <result column="accessTime" property="accessTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="accessRecordList" resultMap="AccessRecordResult" parameterType="String">
+        select * from access_record
+        <if test="condition!='' and condition!=null">
+            where studentNum like #{condition}
+        </if> order by accessTime desc
+    </select>
+    <select id="getAccessRecordsByStudentNum" resultMap="AccessRecordResult" parameterType="String">
+        select * from access_record where studentNum = #{studentNum} order by accessTime desc
+    </select>
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjp.dao.RechargeWaterElectricityDao">
+    <resultMap type="RechargeWaterElectricity" id="RechargeWaterElectricityResult">
+        <result column="studentNum" property="studentNum"/>
+        <result column="dormitoryNum" property="dormitoryNum"/>
+        <result column="rechargeTime" property="rechargeTime"/>
+        <result column="rechargeMoney" property="rechargeMoney"/>
+        <result column="type" property="type"/>
+    </resultMap>
+    <select id="getRechargeWaterElectricityByStudentNum" resultMap="RechargeWaterElectricityResult" parameterType="String">
+        select * from recharge_water_electricity where studentNum = #{studentNum} order by rechargeTime desc
+    </select>
+    <insert id="recharge" parameterType="Map">
+        insert into recharge_water_electricity values(#{studentNum}, #{dormitoryNum}, #{rechargeTime}, #{rechargeMoney}, #{type})
+    </insert>
+</mapper>

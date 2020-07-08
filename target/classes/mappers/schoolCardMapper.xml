@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjp.dao.SchoolCardDao">
+    <resultMap type="SchoolCard" id="SchoolCardResult">
+        <result column="id" property="id"/>
+        <result column="balance" property="balance"/>
+        <result column="password" property="password"/>
+        <result column="bankCardNum" property="bankCardNum"/>
+        <result column="startTime" property="startTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="schoolCardList" resultMap="SchoolCardResult">
+        select * from school_card order by id
+    </select>
+    <select id="getSchoolCardById" resultMap="SchoolCardResult" parameterType="Integer">
+        select * from school_card where id = #{id}
+    </select>
+    <update id="reportTheLoss" parameterType="Integer">
+        update school_card set `status` = "挂失" where id = #{id}
+    </update>
+    <update id="resetPassword" parameterType="Map">
+        update school_card set `password` = #{newPassword} where id = #{id}
+    </update>
+    <update id="findTheSchoolCard" parameterType="Integer">
+        update school_card set `status` = "可用" where id = #{id}
+    </update>
+</mapper>

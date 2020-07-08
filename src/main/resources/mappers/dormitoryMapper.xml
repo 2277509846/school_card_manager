@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjp.dao.DormitoryDao">
+    <resultMap type="Dormitory" id="DormitoryResult">
+        <result column="num" property="num"/>
+        <result column="water" property="water"/>
+        <result column="electricity" property="electricity"/>
+    </resultMap>
+    <select id="dormitoryList" resultMap="DormitoryResult">
+        select * from dormitory
+    </select>
+    <select id="getDormitoryByStudentNum" resultMap="DormitoryResult" parameterType="String">
+        select * from dormitory where num in (select dormitoryNum from student where num = #{studentNum})
+    </select>
+</mapper>
